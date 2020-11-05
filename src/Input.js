@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Page from "./Page";
-import { useSelector, useDispatch } from "react-redux";
-import { productAction, viewerAction } from "./store";
+import { useDispatch } from "react-redux";
+import { productAction, viewerAction } from "./store/store";
+import "./index.css";
 
 function Input() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function Input() {
     <div className="container ">
       <form onSubmit={submitHandler} className="form">
         <input
-          className="input w-25 "
+          className="input w-25 p-1"
           type="number"
           placeholder="product_id"
           name="product"
@@ -41,7 +42,7 @@ function Input() {
           }}
         />
         <input
-          className="input   w-25 "
+          className="input   w-25 p-1 "
           type="number"
           placeholder="viewer_id"
           name="viewer"

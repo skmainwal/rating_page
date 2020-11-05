@@ -15,8 +15,15 @@ export const viewerAction = (id) => {
   };
 };
 
+export const addMore = (id) => {
+  return {
+    type: "MORE",
+    payload: id,
+  };
+};
+
 // initial state
-const initialState = { product_id: null, viewer_id: null };
+const initialState = { product_id: null, viewer_id: null, more: null };
 
 const starReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -30,6 +37,11 @@ const starReducer = (state = initialState, action) => {
       return {
         ...state,
         viewer_id: action.payload,
+      };
+    case "MORE":
+      return {
+        ...state,
+        more: action.payload,
       };
     default:
       return state;
