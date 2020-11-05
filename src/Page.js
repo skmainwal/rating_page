@@ -3,14 +3,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import Review from "./review_comp/Review";
 import "./index.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import shortid from "shortid";
 import Pagination from "./pagination/Pagination";
 import { Link } from "react-router-dom";
+import { productAction, viewerAction, SortAction } from "./store/store";
+import { useHistory } from "react-router-dom";
 const Page = () => {
   // const BASE_URL = " http://www.i2ce.in";
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [respo, setRespo] = useState();
   const [totalLength, setTotalLength] = useState();
+  const [option, setOption] = useState();
 
   const ids = useSelector((state) => state);
   // console.log(ids);
@@ -54,7 +59,7 @@ const Page = () => {
               key={shortid.generate()}
               rating={review.ratings.Overall}
               title={review.title}
-              usefullness={review.usefullness}
+              usefulness={review.usefulness}
               comment={review.comment}
               name={review.reviewer.name}
             />
@@ -65,10 +70,32 @@ const Page = () => {
       });
   }
 
-  console.log("this is dataRender", dataRender);
+  // console.log("this is dataRender", dataRender);
+
+  const submitChoice = (e) => {
+    setOption(e.target.value);
+    dispatch(SortAction(e.target.value));
+    history.push("/morereview");
+  };
 
   return (
     <div className="">
+      <form className="m-5">
+        <div class="form-group col-md-1">
+          <label for="inputState">Sort By</label>
+          <select
+            id="choice"
+            className="form-control"
+            value={option}
+            onChange={submitChoice}
+          >
+            <option selected>Choose...</option>
+            <option value="rating">Rating </option>
+            <option value="usefullness">usefullness </option>
+            <option value="connection_level">connection </option>
+          </select>
+        </div>
+      </form>
       <div className="justify-content-center ml-5">{dataRender}</div>
 
       <div className=" d-flex pagination">

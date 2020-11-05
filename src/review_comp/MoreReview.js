@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 const MoreReview = () => {
   // const BASE_URL = " http://www.i2ce.in";
   const [respo, setRespo] = useState();
+  const [connection, setConnection] = useState({});
 
   const ids = useSelector((state) => state);
 
@@ -28,9 +29,81 @@ const MoreReview = () => {
 
   //   console.log(respo);
   // const total = respo.reviews;
-
   let dataRender;
-  if (respo) {
+  if (ids.addChoice === "rating" && respo) {
+    console.log("this is my rating choice", ids.addChoice);
+    console.log(respo.reviews.ratings);
+    // dataRender = respo.reviews.sort((a, b) => {
+    //   return a.ratings.Overall - b.ratings.Overall;
+    // });
+
+    // dataRender = respo.reviews.map((review) => {
+    //   if (review.friend) {
+    //     return (
+    //       <Review
+    //         key={shortid.generate()}
+    //         rating={review.ratings.Overall}
+    //         title={review.title}
+    //         usefullness={review.usefullness}
+    //         comment={review.comment}
+    //         name={review.reviewer.name}
+    //       />
+    //     );
+    //   } else {
+    //     return null;
+    //   }
+    // });
+  } else if (ids.addChoice === "usefullness" && respo) {
+    dataRender = respo.reviews.sort((a, b) => {
+      return a.usefulness - b.usefulness;
+    });
+    console.log("this is usefullness data", dataRender);
+    dataRender = respo.reviews.map((review) => {
+      if (review.friend) {
+        return (
+          <Review
+            key={shortid.generate()}
+            rating={review.ratings.Overall}
+            title={review.title}
+            usefulness={review.usefulness}
+            comment={review.comment}
+            name={review.reviewer.name}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  } else if (ids.addChoice === "connection_level" && respo) {
+    // console.log("this connection", respo.reviews);
+    let connection = respo.reviews;
+    console.log("this connection", connection);
+    // setConnection(respo.reviews.);
+
+    // dataRender = connection.sort(({ review1, review2 }) => {
+    //   return (
+    //     review1.reviewer.connection_level - review2.reviewer.connection_level
+    //   );
+    // });
+
+    // console.log("this is connection data", dataRender);
+    // dataRender = respo.reviews.map((review) => {
+    //   if (review.friend) {
+    //     return (
+    //       <Review
+    //         key={shortid.generate()}
+    //         rating={review.ratings.Overall}
+    //         title={review.title}
+    //         usefulness={review.usefulness}
+    //         comment={review.comment}
+    //         name={review.reviewer.name}
+    //       />
+    //     );
+    //   } else {
+    //     return null;
+    //   }
+    // });
+  } else if (respo) {
     dataRender = respo.reviews.slice(ids.more + 2).map((review) => {
       if (review.friend) {
         return (
@@ -38,7 +111,7 @@ const MoreReview = () => {
             key={shortid.generate()}
             rating={review.ratings.Overall}
             title={review.title}
-            usefullness={review.usefullness}
+            usefulness={review.usefulness}
             comment={review.comment}
             name={review.reviewer.name}
           />
@@ -48,6 +121,8 @@ const MoreReview = () => {
       }
     });
   }
+
+  // console.log("this is connection list ", connection);
 
   // console.log("this is dataRender", dataRender);
 

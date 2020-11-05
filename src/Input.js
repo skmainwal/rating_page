@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Page from "./Page";
 import { useDispatch } from "react-redux";
-import { productAction, viewerAction } from "./store/store";
+import { productAction, viewerAction, SortAction } from "./store/store";
 import "./index.css";
 
 function Input() {
@@ -19,6 +19,8 @@ function Input() {
     e.preventDefault();
     dispatch(productAction(product));
     dispatch(viewerAction(viewer));
+    // dispatch(SortAction("shubham"));
+
     setViewer("");
     setProduct("");
 

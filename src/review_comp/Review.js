@@ -6,7 +6,7 @@ const Review = (props) => {
   const {
     rating,
     title = "Good",
-    usefullness,
+    usefulness,
     comment = "it 's a good product'",
     name = "shubham",
   } = props;
@@ -23,6 +23,7 @@ const Review = (props) => {
             inactiveColor={"#ddd"}
           />
         </div>
+        <p>usefulness:-{usefulness}</p>
         <div className=" comment">
           <p>{title}</p>
           <p>{comment}</p>

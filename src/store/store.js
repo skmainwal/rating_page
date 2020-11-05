@@ -21,9 +21,20 @@ export const addMore = (id) => {
     payload: id,
   };
 };
+export const SortAction = (choice) => {
+  return {
+    type: "ADD_SORT",
+    payload: choice,
+  };
+};
 
 // initial state
-const initialState = { product_id: null, viewer_id: null, more: null };
+const initialState = {
+  product_id: null,
+  viewer_id: null,
+  more: null,
+  addChoice: null,
+};
 
 const starReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -42,6 +53,11 @@ const starReducer = (state = initialState, action) => {
       return {
         ...state,
         more: action.payload,
+      };
+    case "ADD_SORT":
+      return {
+        ...state,
+        addChoice: action.payload,
       };
     default:
       return state;
