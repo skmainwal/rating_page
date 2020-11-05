@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Input from "./Input";
+import Page from "./Page";
+import Review from "./Review";
+
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <h1 className="text-center border "> Let's Build Rating page</h1>
+          {/* <Input /> */}
+          <Switch>
+            <Route exact path="/input" component={Input} />
+            <Route exact path="/rating_page" component={Page} />
+            <Route exact path="/review" component={Review} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
