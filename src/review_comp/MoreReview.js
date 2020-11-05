@@ -33,6 +33,7 @@ const MoreReview = () => {
   if (ids.addChoice === "rating" && respo) {
     console.log("this is my rating choice", ids.addChoice);
     console.log(respo.reviews.ratings);
+    alert(" usefulness sorting is working");
     // dataRender = respo.reviews.sort((a, b) => {
     //   return a.ratings.Overall - b.ratings.Overall;
     // });
@@ -78,6 +79,7 @@ const MoreReview = () => {
     // console.log("this connection", respo.reviews);
     let connection = respo.reviews;
     console.log("this connection", connection);
+    alert(" usefulness sorting is working");
     // setConnection(respo.reviews.);
 
     // dataRender = connection.sort(({ review1, review2 }) => {
