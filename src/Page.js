@@ -6,12 +6,11 @@ import "./index.css";
 import { useSelector } from "react-redux";
 const Page = () => {
   // const BASE_URL = " http://www.i2ce.in";
-  const [respo, setRespo] = useState("");
-  // const [prodId, setProdId] = useState("");
-  // const [reviewId, setReviewId] = useState("");
+  const [respo, setRespo] = useState();
 
   const ids = useSelector((state) => state);
-  console.log(ids);
+  // console.log(ids);
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -24,30 +23,30 @@ const Page = () => {
       }
     };
     getUser();
-  }, [ids]);
-  const data = respo.reviews;
+  }, []);
 
-  console.log(data);
+  let dataRender;
+  if (respo) {
+    dataRender = respo.reviews.map((review) => {
+      if (review.friend) {
+        return (
+          <Review
+            rating={review.ratings.Overall}
+            title={review.title}
+            usefullness={review.usefullness}
+            comment={review.comment}
+            name={review.reviewer.name}
+          />
+        );
+      } else {
+        return null;
+      }
+    });
+  }
 
-  return (
-    <div className="">
-      {data.map((review) => {
-        if (review.friend) {
-          return (
-            <Review
-              rating={review.ratings.Overall}
-              title={review.title}
-              usefullness={review.usefullness}
-              comment={review.comment}
-              name={review.reviewer.name}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
-    </div>
-  );
+  console.log("this is dataRender", dataRender);
+
+  return <div className="">{dataRender}</div>;
 };
 
 export default Page;
