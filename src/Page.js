@@ -7,33 +7,39 @@ import { useSelector, useDispatch } from "react-redux";
 import shortid from "shortid";
 import Pagination from "./pagination/Pagination";
 import { Link } from "react-router-dom";
-import { productAction, viewerAction, SortAction } from "./store/store";
+import { SortAction } from "./store/store";
 import { useHistory } from "react-router-dom";
+
 const Page = () => {
   // const BASE_URL = " http://www.i2ce.in";
   const history = useHistory();
   const dispatch = useDispatch();
-  const [respo, setRespo] = useState();
+  const [respo, setRespo] = useState(null);
   const [totalLength, setTotalLength] = useState();
   const [option, setOption] = useState();
-
+  // const [load, setLoad] = useState(false);
   const ids = useSelector((state) => state);
+
   // console.log(ids);
 
+  //geting a data from server
+  const getUser = async () => {
+    try {
+      const response = await axios.get(
+        `http://www.i2ce.in/reviews/${ids.product_id}/${ids.viewer_id}`
+      );
+      setRespo(response.data);
+      setTotalLength(response.data.reviews.length);
+    } catch (error) {
+      console.error(`this Error has Occured ${error}`);
+    }
+  };
+
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get(
-          `http://www.i2ce.in/reviews/${ids.product_id}/${ids.viewer_id}`
-        );
-        setRespo(response.data);
-        setTotalLength(response.data.reviews.length);
-      } catch (error) {
-        console.error(`this Error has Occured ${error}`);
-      }
-    };
     getUser();
   }, []);
+
+  //********************pagination  idea  ****************** */
 
   const [showPerPage, setShowPerPage] = useState(3);
   const [pagination, setPagination] = useState({
@@ -47,6 +53,8 @@ const Page = () => {
 
   console.log(respo);
   // const total = respo.reviews;
+
+  // ****************** Rendering the data *********************************
 
   let dataRender;
   if (respo) {
@@ -72,6 +80,8 @@ const Page = () => {
 
   // console.log("this is dataRender", dataRender);
 
+  // ******************Submit function ********************
+
   const submitChoice = (e) => {
     setOption(e.target.value);
     dispatch(SortAction(e.target.value));
@@ -80,7 +90,7 @@ const Page = () => {
 
   return (
     <div className="">
-      <form className="m-5">
+      <form className="ml-1 mt-3">
         <div class="form-group col-md-1">
           <label for="inputState">Sort By</label>
           <select
@@ -100,7 +110,7 @@ const Page = () => {
 
       <div className=" d-flex pagination">
         <Link to="/morereview">
-          <button className="btn m-2 align-content-center">
+          <button className="btn m-2 align-content-center align-items-center">
             More.. <i class="Arrow fa fa-angle-double-down"></i>
           </button>
         </Link>
